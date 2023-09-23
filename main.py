@@ -16,3 +16,4 @@ if __name__ == "__main__":
     img_array = cv2.imread('train/angry/Training_3908.jpg')
     print(img_array)
     plt.imshow(img_array)
+    plt.show()
