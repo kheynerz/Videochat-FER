@@ -37,7 +37,7 @@ unzip facial-expression-recognitionferchallenge.zip
 
 rm facial-expression-recognitionferchallenge.zip
 rm ./Submission.csv
-mkdir datasets
+mkdir -p datasets
 mv ./fer2013/fer2013/fer2013.csv ./datasets/fer2013.csv
 rm -rf ./fer2013
 

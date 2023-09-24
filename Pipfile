@@ -8,8 +8,14 @@ numpy = "*"
 opencv-python = "*"
 matplotlib = "*"
 kaggle = "*"
+pandas = "*"
+seaborn = "*"
+sklearn = "*"
+tensorflow = "*"
+keras = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.11"
