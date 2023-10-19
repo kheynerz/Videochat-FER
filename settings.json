@@ -5,6 +5,7 @@
         "fireEmergencyAlerts" : true
     },
     "app" : {
-        "screenshotRate" : "2"
+        "screenshotRate" : "2",
+        "storageCreationFileRate" : "1"
     }
 }
