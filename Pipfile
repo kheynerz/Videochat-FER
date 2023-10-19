@@ -4,15 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
-opencv-python = "*"
-matplotlib = "*"
-kaggle = "*"
-pandas = "*"
-seaborn = "*"
-sklearn = "*"
-tensorflow = "*"
-keras = "*"
 
 [dev-packages]
 ipykernel = "*"

@@ -1,28 +1,26 @@
-import math
-import numpy as np
-import pandas as pd
+""" from win10toast import ToastNotifier
 
-import seaborn as sns
-from matplotlib import pyplot as plt
+# Crear un objeto ToastNotifier
+toaster = ToastNotifier()
 
-# from sklearn.model_selection import train_test_split
-# from sklearn.preprocessing import LabelEncoder
-# from sklearn.metrics import classification_report
+# Mostrar una notificación
+toaster.show_toast("Título de la notificación", "Cuerpo de la notificación")
+"""
 
-import tensorflow as tf
+from PIL import ImageGrab
+import win32gui
 
-# from tensorflow.python.keras import optimizers
-# from tensorflow.python.keras.models import Sequential
-# from tensorflow.python.keras.layers import Flatten, Dense, Conv2D, MaxPooling2D
-# from tensorflow.python.keras.layers import Dropout, BatchNormalization, LeakyReLU, Activation
-# from tensorflow.python.keras.callbacks import Callback, EarlyStopping, ReduceLROnPlateau
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator
+toplist, winlist = [], []
+def enum_cb(hwnd, results):
+    winlist.append((hwnd, win32gui.GetWindowText(hwnd)))
+win32gui.EnumWindows(enum_cb, toplist)
 
-# from keras.utils import np_utils
+firefox = [(hwnd, title) for hwnd, title in winlist if 'valorant' in title.lower()]
+# just grab the hwnd for first window matching firefox
+firefox = firefox[0]
+hwnd = firefox[0]
 
-
-df = pd.read_csv(
-    './datasets/fer2013.csv')
-print(df.shape)  # (35887, 3)
-
-df.head()
+win32gui.SetForegroundWindow(hwnd)
+bbox = win32gui.GetWindowRect(hwnd)
+img = ImageGrab.grab(bbox)
+img.show()
