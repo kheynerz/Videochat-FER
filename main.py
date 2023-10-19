@@ -1,4 +1,5 @@
 from app_settings import AppSettings
+from session_storage import SessionStorage
 
 def main() :
     #Load settings
@@ -8,10 +9,7 @@ def main() :
 
     #Init UI
 
-
     #End of execution
-
-    pass
 
 
 if __name__ == "__main__":
