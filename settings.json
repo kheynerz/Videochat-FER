@@ -1,0 +1,10 @@
+{
+    "user": {
+        "alertRate" : "300",
+        "silentAlerts" : false,
+        "fireEmergencyAlerts" : true
+    },
+    "app" : {
+        "screenshotRate" : "2"
+    }
+}
