@@ -4,9 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pillow = "*"
-pywin32 = "*"
-screeninfo = "*"
 mss = "*"
 
 [dev-packages]
