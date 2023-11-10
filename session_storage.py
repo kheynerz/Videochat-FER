@@ -50,16 +50,17 @@ class SessionStorage:
 
 
     @staticmethod
-    def append_data(data) -> None:
+    def append_data(data: dict) -> None:
         SessionStorage.check_and_create_file()
       
         current_file = SessionStorage._current_file
         folder_path = SessionStorage._folder_path
 
         if (current_file == None or folder_path == None): return
+        data_with_timestamp = {"time": int(time()), "data": data}
 
         with open(path.join(folder_path, current_file), 'ab') as file:
-            data_bytes = f"{json.dumps(data)}\n".encode('utf-8')
+            data_bytes = f"{json.dumps(data_with_timestamp)}\n".encode('utf-8')
             file.write(data_bytes)
             file.close()
 

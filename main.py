@@ -1,6 +1,9 @@
 from app_settings import AppSettings
 from session_storage import SessionStorage
 
+from analyze import process_images
+
+
 def main() :
     #Load settings
     settings = AppSettings()
@@ -8,11 +11,8 @@ def main() :
     
     #Init UI
     storage = SessionStorage()
-    storage.init_session("Clase de sistemas operativos")
-    storage.append_data({"angry": "2%", "happy": "60%"})
-    storage.append_data({"angry": "2%", "happy": "60%"})
-    storage.append_data({"angry": "2%", "happy": "60%"})
-
+    storage.init_session("Test01")
+    process_images()
 
     #End of execution
 

@@ -1,7 +1,14 @@
 from deepface import DeepFace as df
+from session_storage import SessionStorage
 import concurrent.futures
+from os import listdir
 
-def calculate_average_emotions(list_of_dictionaries):
+# Ruta de la carpeta
+carpeta = '/ruta/de/tu/carpeta'
+
+# Obtener la lista de archivos en la carpeta
+
+def _calculate_average_emotions(list_of_dictionaries):
     # Initialize a dictionary to store the sum of each emotion
     sum_emotions = {
         'angry': 0,
@@ -22,34 +29,30 @@ def calculate_average_emotions(list_of_dictionaries):
 
     return average_emotions
 
-def analyze(image):
+def _analyze(image):
     face_analysis = df.analyze(img_path = f"images/{image}",  actions = ['emotion'], silent=True)
     result = list(map(lambda face: face.get('emotion'), face_analysis))
     #Storage append
-    return calculate_average_emotions(result)
+    return _calculate_average_emotions(result)
 
 
-def process_images(images):
+def process_images():
+    images = listdir('/images')
+    print(images)
     results = [None] * len(images)
 
     # Función para procesar cada imagen individualmente
     def process_image(i):
-        result = analyze(images[i])
+        result = _analyze(images[i])
         results[i] = result
 
     # Utilizar concurrent.futures para ejecutar las funciones de manera concurrente
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(process_image, range(len(images)))
 
-    return results
+    average_results = _calculate_average_emotions(results)
+    SessionStorage.append_data(average_results)
 
-if __name__ == "__main__":
-    # Supongamos que tienes una lista de imágenes
-    images = ['test.png', 'test2.png','test3.png','test4.png']
+    return average_results
 
-    # Procesar imágenes concurrentemente y obtener los resultados
-    results = process_images(images)
-
-    # Imprimir los resultados (en un orden no determinístico debido a la concurrencia)
-    print(results)
 

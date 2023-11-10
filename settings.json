@@ -6,6 +6,6 @@
     },
     "app" : {
         "screenshotRate" : "2",
-        "storageCreationFileRate" : "1"
+        "storageCreationFileRate" : "5"
     }
 }
