@@ -1,6 +1,6 @@
 import json
 from os import makedirs, path
-from time import time, sleep
+from time import time
 
 from constants import STORAGE_FOLDER_NAME
 
@@ -46,7 +46,6 @@ class SessionStorage:
         if (timestamp - SessionStorage._timestamp <= STORAGE_CREATION_FILE_RATE) : return
         
         #Calcular promedio del archivo
-
         SessionStorage._create_session_file(timestamp)
 
 

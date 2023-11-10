@@ -1,9 +1,6 @@
 from app_settings import AppSettings
 from session_storage import SessionStorage
 
-
-from time import sleep
-
 def main() :
     #Load settings
     settings = AppSettings()
@@ -11,8 +8,12 @@ def main() :
     
     #Init UI
     storage = SessionStorage()
-    storage.init_session("CLASE SO HOY")
-    
+    storage.init_session("Clase de sistemas operativos")
+    storage.append_data({"angry": "2%", "happy": "60%"})
+    storage.append_data({"angry": "2%", "happy": "60%"})
+    storage.append_data({"angry": "2%", "happy": "60%"})
+
+
     #End of execution
 
 
