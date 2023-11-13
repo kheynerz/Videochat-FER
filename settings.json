@@ -1,11 +1,1 @@
-{
-    "user": {
-        "alertRate" : "300",
-        "silentAlerts" : false,
-        "fireEmergencyAlerts" : true
-    },
-    "app" : {
-        "screenshotRate" : "2",
-        "storageCreationFileRate" : "1"
-    }
-}
+{"user": {"alertRate": "300", "silentAlerts": true, "fireEmergencyAlerts": true, "Sadness": 30, "Happiness": 20, "Boredom": 100, "Anger": 100, "Excitement": 100, "Fear": 100, "Surprise": 100}, "app": {"screenshotRate": "2", "storageCreationFileRate": "1"}}
