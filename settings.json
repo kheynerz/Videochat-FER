@@ -5,7 +5,8 @@
         "fireEmergencyAlerts" : true
     },
     "app" : {
-        "screenshotRate" : "2",
+        "screenshotRate" : 1,
+        "analysisRate": 1,
         "storageCreationFileRate" : "300",
         "emotions": ["angry","disgust", "fear", "happy", "sad", "surprise", "neutral"]
     }

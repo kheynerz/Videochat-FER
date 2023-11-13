@@ -2,9 +2,8 @@ import json
 from os import makedirs, path
 from time import time
 
-from constants import STORAGE_FOLDER_NAME
-
-from app_settings import AppSettings
+from Config.constants import STORAGE_FOLDER_NAME
+from Config.app_settings import AppSettings
 
 class SessionStorage:
     _current_file = None
@@ -40,9 +39,12 @@ class SessionStorage:
     @staticmethod
     def _calculate_average():
         with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
-            fileContent = file.read()
-            print(fileContent)
+            fileContent = file.readlines()
+            for i in fileContent:
+                print(eval(i))
 
+
+                
     @staticmethod
     def check_and_create_file():
         storage = AppSettings()

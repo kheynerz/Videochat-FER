@@ -1,8 +1,13 @@
 import pathlib
+from time import sleep
 from deepface import DeepFace as df
-from session_storage import SessionStorage
 import os
-from app_settings import AppSettings 
+
+from Config.session_storage import SessionStorage
+from Config.app_settings import AppSettings 
+
+
+
 
 def _calculate_average_emotions(list_of_dictionaries):
     settings = AppSettings()
@@ -32,7 +37,7 @@ def _analyze(image):
     return _calculate_average_emotions(cleaned_result)
 
 def process_images():
-    directory = f'{pathlib.Path(__file__).parent.absolute()}/images'
+    directory = os.path.join(pathlib.Path(__file__).parent.absolute(), 'images')
     images = [os.path.join(directory, archivo) for archivo in os.listdir(directory)]
     results = []
 
@@ -47,12 +52,16 @@ def process_images():
     for i in range(0, len(images)):
         process_image(i)
 
+    for image in images:
+        os.remove(image)
+
     if (len(results) == 0): return
     average_results = _calculate_average_emotions(results)
     SessionStorage.append_data(average_results)
-
-    #for image in images:
-    #    os.remove(image)
+    
+    settings = AppSettings()
+    delay = settings.get_app_setting('analysisRate')
+    sleep(delay)
 
     return average_results
 

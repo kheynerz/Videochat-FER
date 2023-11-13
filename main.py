@@ -1,9 +1,30 @@
-from app_settings import AppSettings
-from session_storage import SessionStorage
-
+from Config.app_settings import AppSettings
+from Config.session_storage import SessionStorage
+from ImageGetter.get_images import capture_full_screen
 from analyze import process_images
 
+from concurrent.futures import ThreadPoolExecutor, wait
+
 from time import sleep
+
+onSession = False
+
+selectedMonitor = 1
+
+def getImages(): 
+    global onSession
+    while (onSession):
+        capture_full_screen(selectedMonitor)
+
+def process():
+    global onSession
+    while (onSession):
+        process_images()
+
+def Stop():
+    global onSession
+    sleep(5)
+    onSession = False
 
 def main() :
     #Load settings
@@ -14,10 +35,23 @@ def main() :
     #Init UI (UI Init session)
     storage.init_session("Test01")
 
-    result = process_images()
-    #sleep(1)
-    #process_images()
+    global onSession
+    onSession = True
+
+    with ThreadPoolExecutor() as executor:
+        # Ejecutar las funciones concurrentemente
+        future_images = executor.submit(getImages)
+        future_process = executor.submit(process)
+        future_stop = executor.submit(Stop)
+        # Esperar a que ambas funciones terminen
+        wait([future_images, future_process, future_stop])
+   
+
+   #In case some images are not processed yet
+    process_images()
+
     #End of execution
+    print("EOF")
 
 
 if __name__ == "__main__":
