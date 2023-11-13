@@ -3,17 +3,20 @@ from session_storage import SessionStorage
 
 from analyze import process_images
 
+from time import sleep
 
 def main() :
     #Load settings
     settings = AppSettings()
     settings.load_settings()
     
-    #Init UI
     storage = SessionStorage()
+    #Init UI (UI Init session)
     storage.init_session("Test01")
-    process_images()
 
+    result = process_images()
+    #sleep(1)
+    #process_images()
     #End of execution
 
 

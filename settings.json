@@ -6,6 +6,7 @@
     },
     "app" : {
         "screenshotRate" : "2",
-        "storageCreationFileRate" : "5"
+        "storageCreationFileRate" : "300",
+        "emotions": ["angry","disgust", "fear", "happy", "sad", "surprise", "neutral"]
     }
 }

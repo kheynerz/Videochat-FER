@@ -12,7 +12,6 @@ class SessionStorage:
     _file_counter = 0
     _timestamp = None
 
-
     @staticmethod
     def init_session(name : str) -> None: 
         try:
@@ -32,10 +31,17 @@ class SessionStorage:
         file_name = f"{SessionStorage._file_counter}-{timestamp}"
         SessionStorage._file_counter += 1
 
-        file = open(path.join(SessionStorage._folder_path, file_name), 'wb')
+        file = open(path.join(SessionStorage._folder_path, file_name), 'w')
         file.close()
         SessionStorage._current_file = file_name
         SessionStorage._timestamp = timestamp
+
+
+    @staticmethod
+    def _calculate_average():
+        with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
+            fileContent = file.read()
+            print(fileContent)
 
     @staticmethod
     def check_and_create_file():
@@ -46,6 +52,7 @@ class SessionStorage:
         if (timestamp - SessionStorage._timestamp <= STORAGE_CREATION_FILE_RATE) : return
         
         #Calcular promedio del archivo
+        SessionStorage._calculate_average()
         SessionStorage._create_session_file(timestamp)
 
 
@@ -58,9 +65,8 @@ class SessionStorage:
 
         if (current_file == None or folder_path == None): return
         data_with_timestamp = {"time": int(time()), "data": data}
-
-        with open(path.join(folder_path, current_file), 'ab') as file:
-            data_bytes = f"{json.dumps(data_with_timestamp)}\n".encode('utf-8')
-            file.write(data_bytes)
+        
+        with open(path.join(folder_path, current_file), 'a') as file:
+            file.write(f"{json.dumps(data_with_timestamp)}\n")
             file.close()
 
