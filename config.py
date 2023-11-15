@@ -17,13 +17,13 @@ class ConfigMenu(QWidget):
 
         config = self.read_config()
 
-        self.add_alert_section("Sadness", main_layout, config["user"].get("Sadness", ""))
-        self.add_alert_section("Happiness", main_layout, config["user"].get("Happiness", ""))
-        self.add_alert_section("Boredom", main_layout, config["user"].get("Boredom", ""))
-        self.add_alert_section("Anger", main_layout, config["user"].get("Anger", ""))
-        self.add_alert_section("Excitement", main_layout, config["user"].get("Excitement", ""))
+        self.add_alert_section("angry", main_layout, config["user"].get("angry", ""))
+        self.add_alert_section("Disgust", main_layout, config["user"].get("Disgust", ""))
         self.add_alert_section("Fear", main_layout, config["user"].get("Fear", ""))
-        self.add_alert_section("Surprise", main_layout, config["user"].get("Surprise", ""))
+        self.add_alert_section("happy", main_layout, config["user"].get("happy", ""))
+        self.add_alert_section("sad", main_layout, config["user"].get("sad", ""))
+        self.add_alert_section("surprise", main_layout, config["user"].get("surprise", ""))
+        self.add_alert_section("neutral", main_layout, config["user"].get("neutral", ""))
 
         alert_rate_layout = QHBoxLayout()
         main_layout.addLayout(alert_rate_layout)
@@ -65,21 +65,21 @@ class ConfigMenu(QWidget):
         setattr(self, alert_type.lower() + '_input', alert_input)
 
     def save_config(self):
-        config = self.read_config()  # Read the existing config
-        config["user"] = {  # Only update the 'user' section
+        config = self.read_config()  
+        config["user"] = {  
             "alertRate" : self.alert_rate_input.text(),
             "silentAlerts" : self.silence_alerts_checkbox.isChecked(),
             "fireEmergencyAlerts" : self.fire_emergency_checkbox.isChecked(),
-            "Sadness": int(self.sadness_input.text()) if self.sadness_input.text() else 0,
-            "Happiness": int(self.happiness_input.text()) if self.happiness_input.text() else 0,
-            "Boredom": int(self.boredom_input.text()) if self.boredom_input.text() else 0,
-            "Anger": int(self.anger_input.text()) if self.anger_input.text() else 0,
-            "Excitement": int(self.excitement_input.text()) if self.excitement_input.text() else 0,
+            "angry": int(self.angry_input.text()) if self.angry_input.text() else 0,
+            "Disgust": int(self.disgust_input.text()) if self.disgust_input.text() else 0,
             "Fear": int(self.fear_input.text()) if self.fear_input.text() else 0,
-            "Surprise": int(self.surprise_input.text()) if self.surprise_input.text() else 0
+            "happy": int(self.happy_input.text()) if self.happy_input.text() else 0,
+            "sad": int(self.sad_input.text()) if self.sad_input.text() else 0,
+            "surprise": int(self.surprise_input.text()) if self.surprise_input.text() else 0,
+            "neutral": int(self.neutral_input.text()) if self.neutral_input.text() else 0
         }
         with open('settings.json', 'w') as f:
-            json.dump(config, f)  # Save the updated config
+            json.dump(config, f) 
 
     def read_config(self):
         with open('settings.json', 'r') as f:

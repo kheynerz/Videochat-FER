@@ -1,6 +1,9 @@
 {
-    "Sadness": 10,
-    "Boredom": 10,
-    "Anger": 20,
-    "Happiness": 40
+    "angry": 30,
+    "Disgust": 10,
+    "Fear": 20,
+    "happy": 40,
+    "sad": 40,
+    "surprise": 10,
+    "neutral":10
 }
