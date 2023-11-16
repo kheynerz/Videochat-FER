@@ -1,3 +1,4 @@
+
 from Config.app_settings import AppSettings
 from Config.session_storage import SessionStorage
 from ImageGetter.get_images import capture_full_screen
@@ -23,7 +24,7 @@ def process():
 
 def Stop():
     global onSession
-    sleep(15)
+    sleep(10)
     onSession = False
 
 def main() :
@@ -33,7 +34,7 @@ def main() :
     
     storage = SessionStorage()
     #Init UI (UI Init session)
-    storage.init_session("Test02")
+    storage.init_session("Test03")
 
     global onSession
     onSession = True
@@ -49,10 +50,6 @@ def main() :
    #In case some images are not processed yet
     process_images()
 
-    #End of execution
-    print("EOF")
-
-
 if __name__ == "__main__":
     main()
-    
+   

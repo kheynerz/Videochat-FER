@@ -7,7 +7,7 @@
     "app" : {
         "screenshotRate" : 1,
         "analysisRate": 1,
-        "storageCreationFileRate" : "5",
+        "storageCreationFileRate" : "2",
         "emotions": ["angry","disgust", "fear", "happy", "sad", "surprise", "neutral"]
     }
 }

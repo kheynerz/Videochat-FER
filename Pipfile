@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 mss = "*"
+pyqt5 = "*"
 deepface = "*"
 
 [dev-packages]

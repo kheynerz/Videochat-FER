@@ -59,7 +59,7 @@ class ScreenCaptureApp(QWidget):
         settings = AppSettings()
         settings.load_settings()
         delay = int(settings.get_app_setting('screenshotRate'))
-        time.sleep(1)
+        time.sleep(delay)
 
 
 if __name__ == '__main__':

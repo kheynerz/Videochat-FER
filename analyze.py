@@ -17,17 +17,22 @@ def _analyze(image):
     except ValueError:
         print(f"faces not found on: {image}")
         return
-
+    
     result = list(map(lambda face: face.get('emotion'), face_analysis))
     cleaned_result = [valor for valor in result if valor is not None]
+    if (len(cleaned_result) == 0): return
     return calculate_average_emotions(cleaned_result, emotions)
 
 def process_images():
+    settings = AppSettings()
+    delay = settings.get_app_setting('analysisRate')
+    sleep(delay)
+
     directory = os.path.join(pathlib.Path(__file__).parent.absolute(), 'images')
     images = [os.path.join(directory, archivo) for archivo in os.listdir(directory)]
     if (len(images) == 0): return
-  
-    results = []
+
+    results = [] 
     # Función para procesar cada imagen individualmente
     def process_image(image):
         result = _analyze(image)
@@ -41,13 +46,11 @@ def process_images():
         process_image(image)
         os.remove(image)
 
+
     if (len(results) == 0): return
     average_results = calculate_average_emotions(results, emotions)
     SessionStorage.append_data(average_results)
     
-    settings = AppSettings()
-    delay = settings.get_app_setting('analysisRate')
-    sleep(delay)
 
     return average_results
 
