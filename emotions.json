@@ -1,7 +1,7 @@
 {
     "angry": 80,
-    "Disgust": 10,
-    "Fear": 20,
+    "disgust": 10,
+    "fear": 20,
     "happy": 40,
     "sad": 40,
     "surprise": 10,

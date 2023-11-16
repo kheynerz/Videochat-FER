@@ -18,8 +18,8 @@ class ConfigMenu(QWidget):
         config = self.read_config()
 
         self.add_alert_section("angry", main_layout, config["user"].get("angry", ""))
-        self.add_alert_section("Disgust", main_layout, config["user"].get("Disgust", ""))
-        self.add_alert_section("Fear", main_layout, config["user"].get("Fear", ""))
+        self.add_alert_section("disgust", main_layout, config["user"].get("disgust", ""))
+        self.add_alert_section("fear", main_layout, config["user"].get("fear", ""))
         self.add_alert_section("happy", main_layout, config["user"].get("happy", ""))
         self.add_alert_section("sad", main_layout, config["user"].get("sad", ""))
         self.add_alert_section("surprise", main_layout, config["user"].get("surprise", ""))
@@ -71,8 +71,8 @@ class ConfigMenu(QWidget):
             "silentAlerts" : self.silence_alerts_checkbox.isChecked(),
             "fireEmergencyAlerts" : self.fire_emergency_checkbox.isChecked(),
             "angry": int(self.angry_input.text()) if self.angry_input.text() else 0,
-            "Disgust": int(self.disgust_input.text()) if self.disgust_input.text() else 0,
-            "Fear": int(self.fear_input.text()) if self.fear_input.text() else 0,
+            "disgust": int(self.disgust_input.text()) if self.disgust_input.text() else 0,
+            "fear": int(self.fear_input.text()) if self.fear_input.text() else 0,
             "happy": int(self.happy_input.text()) if self.happy_input.text() else 0,
             "sad": int(self.sad_input.text()) if self.sad_input.text() else 0,
             "surprise": int(self.surprise_input.text()) if self.surprise_input.text() else 0,

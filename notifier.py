@@ -11,7 +11,7 @@ def read_config():
 def get_emotion_levels():
     with open('emotions.json', 'r') as f:
         emotions = json.load(f)
-    return emotions.get("angry", 0), emotions.get("Disgust", 0), emotions.get("Fear", 0), emotions.get("happy", 0), emotions.get("sad", 0), emotions.get("surprise", 0), emotions.get("neutral", 0)
+    return emotions.get("angry", 0), emotions.get("disgust", 0), emotions.get("fear", 0), emotions.get("happy", 0), emotions.get("sad", 0), emotions.get("surprise", 0), emotions.get("neutral", 0)
 
 notifier = DesktopNotifier()
 
@@ -26,10 +26,10 @@ async def notifierConfig():
 
     while True:
 
-        angry, Disgust, Fear, happy, sad, surprise, neutral = get_emotion_levels()
+        angry, disgust, fear, happy, sad, surprise, neutral = get_emotion_levels()
 
 
-        for emotion, level in zip(["angry","Disgust","Fear","happy","sad","surprise","neutral"], [angry,Disgust,Fear,happy,sad,surprise,neutral]):
+        for emotion, level in zip(["angry","disgust","fear","happy","sad","surprise","neutral"], [angry,disgust,fear,happy,sad,surprise,neutral]):
             if level >= config.get(emotion, 0):
                 n = await notifier.send(title=f"Alerta de {emotion.lower()}", message=f"El {level}% de la clase está {emotion.lower()}.")
                 await asyncio.sleep(5)
