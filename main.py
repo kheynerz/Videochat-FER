@@ -23,7 +23,7 @@ def process():
 
 def Stop():
     global onSession
-    sleep(5)
+    sleep(15)
     onSession = False
 
 def main() :
@@ -33,7 +33,7 @@ def main() :
     
     storage = SessionStorage()
     #Init UI (UI Init session)
-    storage.init_session("Test01")
+    storage.init_session("Test02")
 
     global onSession
     onSession = True
@@ -46,7 +46,6 @@ def main() :
         # Esperar a que ambas funciones terminen
         wait([future_images, future_process, future_stop])
    
-
    #In case some images are not processed yet
     process_images()
 

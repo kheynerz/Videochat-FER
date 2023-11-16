@@ -4,6 +4,8 @@ from time import time
 
 from Config.constants import STORAGE_FOLDER_NAME
 from Config.app_settings import AppSettings
+from utils import calculate_average_emotions
+
 
 class SessionStorage:
     _current_file = None
@@ -35,15 +37,22 @@ class SessionStorage:
         SessionStorage._current_file = file_name
         SessionStorage._timestamp = timestamp
 
-
     @staticmethod
-    def _calculate_average():
+    def _calculate_average(end_timestamp):
+        data = []
         with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
             fileContent = file.readlines()
-            for i in fileContent:
-                print(eval(i))
+            for line in fileContent:
+                data.append(json.loads(line)['data'])
+        
+        folder_path = SessionStorage._folder_path
+    
+        average = calculate_average_emotions(data, AppSettings.get_app_setting('emotions'))
 
-
+        data_with_timestamp = {"start": SessionStorage._timestamp, "end": end_timestamp, "data": average}
+        with open(path.join(folder_path, 'Average.dat'), 'a') as file:
+            file.write(f"{json.dumps(data_with_timestamp)}\n")
+            file.close()
                 
     @staticmethod
     def check_and_create_file():
@@ -54,9 +63,8 @@ class SessionStorage:
         if (timestamp - SessionStorage._timestamp <= STORAGE_CREATION_FILE_RATE) : return
         
         #Calcular promedio del archivo
-        SessionStorage._calculate_average()
+        SessionStorage._calculate_average(timestamp)
         SessionStorage._create_session_file(timestamp)
-
 
     @staticmethod
     def append_data(data: dict) -> None:
