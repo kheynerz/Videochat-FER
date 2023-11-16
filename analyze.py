@@ -1,55 +1,58 @@
+import pathlib
+from time import sleep
 from deepface import DeepFace as df
-import concurrent.futures
+import os
 
-def calculate_average_emotions(list_of_dictionaries):
-    # Initialize a dictionary to store the sum of each emotion
-    sum_emotions = {
-        'angry': 0,
-        'disgust': 0,
-        'fear': 0,
-        'happy': 0,
-        'sad': 0,
-        'surprise': 0,
-        'neutral': 0
-    }
+from Config.session_storage import SessionStorage
+from Config.app_settings import AppSettings
+from utils import calculate_average_emotions 
 
-    for dictionary in list_of_dictionaries:
-        for emotion, value in dictionary.items():
-            sum_emotions[emotion] += value
 
-    number_of_elements = len(list_of_dictionaries)
-    average_emotions = {emotion: value / number_of_elements for emotion, value in sum_emotions.items()}
+def _analyze(image):
+    settings = AppSettings()
+    emotions = settings.get_app_setting('emotions')
+    
+    try:
+        face_analysis = df.analyze(img_path = f"{image}",  actions = ['emotion'], silent=True)
+    except ValueError:
+        print(f"faces not found on: {image}")
+        return
 
-    return average_emotions
-
-def analyze(image):
-    face_analysis = df.analyze(img_path = f"images/{image}",  actions = ['emotion'], silent=True)
     result = list(map(lambda face: face.get('emotion'), face_analysis))
-    #Storage append
-    return calculate_average_emotions(result)
+    cleaned_result = [valor for valor in result if valor is not None]
+    return calculate_average_emotions(cleaned_result, emotions)
 
-
-def process_images(images):
-    results = [None] * len(images)
-
+def process_images():
+    directory = os.path.join(pathlib.Path(__file__).parent.absolute(), 'images')
+    images = [os.path.join(directory, archivo) for archivo in os.listdir(directory)]
+    if (len(images) == 0): return
+  
+    results = []
     # Función para procesar cada imagen individualmente
-    def process_image(i):
-        result = analyze(images[i])
-        results[i] = result
+    def process_image(image):
+        result = _analyze(image)
+        if (not result): return
+        results.append(result)
 
-    # Utilizar concurrent.futures para ejecutar las funciones de manera concurrente
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        executor.map(process_image, range(len(images)))
+    settings = AppSettings()
+    emotions = settings.get_app_setting('emotions')
+    
+    for image in images:
+        process_image(image)
+        os.remove(image)
 
-    return results
+    if (len(results) == 0): return
+    average_results = calculate_average_emotions(results, emotions)
+    SessionStorage.append_data(average_results)
+    
+    settings = AppSettings()
+    delay = settings.get_app_setting('analysisRate')
+    sleep(delay)
 
-if __name__ == "__main__":
-    # Supongamos que tienes una lista de imágenes
-    images = ['test.png', 'test2.png','test3.png','test4.png']
+    return average_results
 
-    # Procesar imágenes concurrentemente y obtener los resultados
-    results = process_images(images)
 
-    # Imprimir los resultados (en un orden no determinístico debido a la concurrencia)
-    print(results)
 
+#Utilizar concurrent.futures para ejecutar las funciones de manera concurrente
+    #with concurrent.futures.ThreadPoolExecutor() as executor:
+    #    executor.map(process_image, range(len(images)))

@@ -1,1 +1,20 @@
-{"user": {"alertRate": 15, "silentAlerts": false, "fireEmergencyAlerts": false, "angry": 20, "Disgust": 20, "Fear": 100, "happy": 100, "sad": 100, "surprise": 100, "neutral": 100}, "app": {"screenshotRate": "2", "storageCreationFileRate": "1"}}
+{
+    "user": {
+        "alertRate" : 15,
+        "silentAlerts" : false,
+        "fireEmergencyAlerts" : true,
+        "angry": 20, 
+        "Disgust": 20, 
+        "Fear": 100, 
+        "happy": 100, 
+        "sad": 100, 
+        "surprise": 100, 
+        "neutral": 100
+    },
+    "app" : {
+        "screenshotRate" : 1,
+        "analysisRate": 1,
+        "storageCreationFileRate" : "5",
+        "emotions": ["angry","disgust", "fear", "happy", "sad", "surprise", "neutral"]
+    }
+}

@@ -2,16 +2,16 @@ import json
 from os import makedirs, path
 from time import time
 
-from constants import STORAGE_FOLDER_NAME
+from Config.constants import STORAGE_FOLDER_NAME
+from Config.app_settings import AppSettings
+from utils import calculate_average_emotions
 
-from app_settings import AppSettings
 
 class SessionStorage:
     _current_file = None
     _folder_path = None
     _file_counter = 0
     _timestamp = None
-
 
     @staticmethod
     def init_session(name : str) -> None: 
@@ -32,11 +32,28 @@ class SessionStorage:
         file_name = f"{SessionStorage._file_counter}-{timestamp}"
         SessionStorage._file_counter += 1
 
-        file = open(path.join(SessionStorage._folder_path, file_name), 'wb')
+        file = open(path.join(SessionStorage._folder_path, file_name), 'w')
         file.close()
         SessionStorage._current_file = file_name
         SessionStorage._timestamp = timestamp
 
+    @staticmethod
+    def _calculate_average(end_timestamp):
+        data = []
+        with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
+            fileContent = file.readlines()
+            for line in fileContent:
+                data.append(json.loads(line)['data'])
+        
+        folder_path = SessionStorage._folder_path
+    
+        average = calculate_average_emotions(data, AppSettings.get_app_setting('emotions'))
+
+        data_with_timestamp = {"start": SessionStorage._timestamp, "end": end_timestamp, "data": average}
+        with open(path.join(folder_path, 'Average.dat'), 'a') as file:
+            file.write(f"{json.dumps(data_with_timestamp)}\n")
+            file.close()
+                
     @staticmethod
     def check_and_create_file():
         storage = AppSettings()
@@ -46,20 +63,20 @@ class SessionStorage:
         if (timestamp - SessionStorage._timestamp <= STORAGE_CREATION_FILE_RATE) : return
         
         #Calcular promedio del archivo
+        SessionStorage._calculate_average(timestamp)
         SessionStorage._create_session_file(timestamp)
 
-
     @staticmethod
-    def append_data(data) -> None:
+    def append_data(data: dict) -> None:
         SessionStorage.check_and_create_file()
       
         current_file = SessionStorage._current_file
         folder_path = SessionStorage._folder_path
 
         if (current_file == None or folder_path == None): return
-
-        with open(path.join(folder_path, current_file), 'ab') as file:
-            data_bytes = f"{json.dumps(data)}\n".encode('utf-8')
-            file.write(data_bytes)
+        data_with_timestamp = {"time": int(time()), "data": data}
+        
+        with open(path.join(folder_path, current_file), 'a') as file:
+            file.write(f"{json.dumps(data_with_timestamp)}\n")
             file.close()
 

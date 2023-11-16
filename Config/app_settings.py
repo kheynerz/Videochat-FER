@@ -1,5 +1,5 @@
 import json
-from constants import SETTINGS_FILE_NAME
+from Config.constants import SETTINGS_FILE_NAME
 
 class AppSettings:
     _data = None
