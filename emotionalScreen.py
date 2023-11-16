@@ -18,11 +18,13 @@ class EmotionWindow(QWidget):
         self.setLayout(self.layout)
 
         self.labels = {
-            'Happiness': QLabel(self),
-            'Sadness': QLabel(self),
-            'Seriousness': QLabel(self),
-            'Anger': QLabel(self),
-            'Otros' :  QLabel(self)
+            'angry': QLabel(self),
+            'disgust': QLabel(self),
+            'fear': QLabel(self),
+            'happy': QLabel(self),
+            'sad' :  QLabel(self),
+            'surprise' :  QLabel(self),
+            'eutral' :  QLabel(self)
         }
 
         for name, label in self.labels.items():
@@ -63,11 +65,13 @@ def main():
     window.show()
 
     window.set_values({
-        'Happiness': 60,
-        'Sadness': 20,
-        'Seriousness': 10,
-        'Anger': 5,
-        'Otros':5
+        'angry':60,
+        'disgust': 23,
+        'fear': 33,
+        'happy': 65,
+        'sad' :56, 
+        'surprise':34, 
+        'eutral':10
     })
 
     sys.exit(app.exec_())
