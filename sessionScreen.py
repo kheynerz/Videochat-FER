@@ -1,11 +1,32 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLineEdit, QListWidget, QListWidgetItem, QLabel
+from PyQt5.QtWidgets import  QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLineEdit, QListWidget, QListWidgetItem, QLabel
 from PyQt5.QtCore import QSize
 from datetime import datetime
 from config import ConfigMenu
+from Config.session_storage import SessionStorage
+from emotionalScreen import EmotionWindow
+from concurrent.futures import ThreadPoolExecutor, wait
+from analyze import process_images
+from ImageGetter.get_images import capture_full_screen
+
+import threading
+
+onSession = False
+selectedMonitor = 1
+
+def getImages(): 
+    global onSession
+    while (onSession):
+        capture_full_screen(selectedMonitor)
+
+def process():
+    global onSession
+    while (onSession):
+        process_images()
 
 class SessionApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.emotionWindow = EmotionWindow(self)
 
         self.layout = QVBoxLayout()
 
@@ -33,7 +54,7 @@ class SessionApp(QWidget):
             item.setSizeHint(QSize(item.sizeHint().width(), 50))
 
         self.view_button = QPushButton('View session')
-        self.view_button.clicked.connect(self.view_session)
+        self.view_button.clicked.connect(self.open_emotional_screen)
         self.view_button.setEnabled(False)  
         self.view_button.setStyleSheet('background-color: #008CBA; font-size: 14px; color: white; border-radius: 10px; padding: 10px;')
 
@@ -50,11 +71,19 @@ class SessionApp(QWidget):
         self.setLayout(self.layout)
 
     def start_session(self):
+        global onSession
+        storage = SessionStorage()
+
         session_name = self.session_name.text()
+        storage.init_session(session_name)
         start_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        onSession = True
+        self.run_concurrent_process()
 
         session_item = QListWidgetItem(f'Session: {session_name}, Time: {start_time}')
         self.session_list.addItem(session_item)
+        self.open_emotional_screen()
+
 
     def enable_view_button(self):
         if len(self.session_list.selectedItems()) > 0:
@@ -62,21 +91,30 @@ class SessionApp(QWidget):
         else:
             self.view_button.setEnabled(False)
 
-    def view_session(self):
-        print('activated')
-        pass
+    def open_emotional_screen(self):
+        self.hide()
+        self.emotionWindow.getEmotionsData()
+        self.emotionWindow.show()
 
+    
     def open_config(self):
         self.config_window = ConfigMenu()
         self.config_window.show()
 
-if __name__ == '__main__':
-    app = QApplication([])
-    window = SessionApp()
-    window.show()
-    app.exec_()
 
+    def run_concurrent_process(self):
+        with ThreadPoolExecutor() as executor:
+            # Ejecutar las funciones concurrentemente
+            future_images = executor.submit(getImages)
+            future_process = executor.submit(process)
+            # Esperar a que ambas funciones terminen
 
+            #thread = threading.Thread(target=self.wait_for_completion, args=(future_images, future_process))
+            #thread.start()
+
+    #def wait_for_completion(self, *futures):
+        # Esperar a que todas las funciones terminen
+       # wait(futures)
 
 
 

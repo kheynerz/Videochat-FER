@@ -89,6 +89,15 @@ class SessionStorage:
             file.close()
 
     @staticmethod
+    def getEmotions():
+        emotions = {emotion: 0 for emotion in AppSettings.get_app_setting('emotions')}
+        with open(path.join(SessionStorage._folder_path, "emotions.json"), 'r') as file:
+            fileContent = file.read()
+            emotions = json.loads(fileContent)
+            file.close()
+        return emotions
+
+    @staticmethod
     def check_and_create_file():
         storage = AppSettings()
         STORAGE_CREATION_FILE_RATE = int(storage.get_app_setting('storageCreationFileRate'))
