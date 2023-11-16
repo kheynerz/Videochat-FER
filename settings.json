@@ -1,8 +1,15 @@
 {
     "user": {
-        "alertRate" : "300",
+        "alertRate" : 15,
         "silentAlerts" : false,
-        "fireEmergencyAlerts" : true
+        "fireEmergencyAlerts" : true,
+        "angry": 20, 
+        "Disgust": 20, 
+        "Fear": 100, 
+        "happy": 100, 
+        "sad": 100, 
+        "surprise": 100, 
+        "neutral": 100
     },
     "app" : {
         "screenshotRate" : 1,
