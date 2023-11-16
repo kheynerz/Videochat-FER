@@ -29,7 +29,7 @@ async def notifierConfig():
         angry, Disgust, Fear, happy, sad, surprise, neutral = get_emotion_levels()
 
 
-        for emotion, level in zip(["angry", "Disgust", "Fear", "happy", "sad", "surprise", "neutral"], [angry, Disgust, Fear, happy, sad, surprise, neutral]):
+        for emotion, level in zip(["angry","Disgust","Fear","happy","sad","surprise","neutral"], [angry,Disgust,Fear,happy,sad,surprise,neutral]):
             if level >= config.get(emotion, 0):
                 n = await notifier.send(title=f"Alerta de {emotion.lower()}", message=f"El {level}% de la clase está {emotion.lower()}.")
                 await asyncio.sleep(5)
