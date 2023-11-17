@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 from Config.app_settings import AppSettings
+import os
 
 from sessionScreen import SessionApp
 
@@ -11,6 +12,10 @@ def main() :
     settings = AppSettings()
     settings.load_settings()
     
+    # Check if the 'images' directory exists, if not, create it
+    if not os.path.exists('images'):
+        os.makedirs('images')
+
     app = QApplication([])
     window = SessionApp()
     window.show()
