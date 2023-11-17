@@ -73,7 +73,7 @@ class SessionStorage:
 
         emotionsAverage = []
         if (len(averageData) > 0):
-            emotionsAverage = calculate_average_emotions(averageData, emotions)
+            emotionsAverage.append(calculate_average_emotions(averageData, emotions))
         data = []
 
         with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
