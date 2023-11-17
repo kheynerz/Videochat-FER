@@ -19,8 +19,7 @@ pipenv shell
 # Install project dependencies
 pipenv install
 ```
-
-This command will read the Pipfile and create a virtual environment with the necessary dependencies.
+Note: After installing the packages with pipenv, remember to change the execution environment in your IDE.
 
 ## Usage
 The entry point for the project is the main.py file. Make sure to execute this file to start the application.
