@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3e549ab4c00af7617291fcdafdf8215e3cb386951f708bddc3ead0af98b70e64"
+            "sha256": "1409e01d65012d57e0e536f5d7f6105c71c24234e35e225345e0d6c546a95142"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -183,6 +183,15 @@
             "index": "pypi",
             "markers": "python_full_version >= '3.5.5'",
             "version": "==0.0.79"
+        },
+        "desktop-notifier": {
+            "hashes": [
+                "sha256:3b23f901ef04649972f3adb2f0d58d4c450a590ff7dd710ad9d40fafd2ca36d1",
+                "sha256:d2e2c18cd4c93999998ee8b7304ce2f1c5f642aab37b1c7b4b117cc738909f61"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.7'",
+            "version": "==3.5.6"
         },
         "filelock": {
             "hashes": [
@@ -779,7 +788,7 @@
                 "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86",
                 "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.8.2"
         },
         "pytz": {
@@ -837,7 +846,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "soupsieve": {
@@ -981,6 +990,26 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==0.41.3"
+        },
+        "winsdk": {
+            "hashes": [
+                "sha256:09db2b2ce261499bdd5cc32104ed2fe40dbcfeda20f4643c9126f3ee58566523",
+                "sha256:1127ec12faa8793e82cc64d983a84d46a20806c24782d2469e5445b008828076",
+                "sha256:1e98249a31db66d731e19c2e202e0c455fcea419fd172b950771767ca6b4628a",
+                "sha256:207d35f9ab445521d4f060b5c1f2181660390cd3db27b32961af7438478fb226",
+                "sha256:2586930fc56a86ff5065c6099f69e7bcdf80bc3e919c0837d4508433d77cc942",
+                "sha256:53ef9e1017a6c94a51ccbe9a7a5847358fd78855663519c740ee22ff6255d6b5",
+                "sha256:b6bcf6ed7a0e97793c7b75e0acac0eb5fb658e0fcbcf12b1b3631e7eb668b294",
+                "sha256:c17c76d7a9328d4da5b569beffcc3403ee32cdb8194b340dfc1df9a3a5866f0e",
+                "sha256:cc6ae631aa18f3c3eac975562f2874de11131363c45130dedd557e7789a2d165",
+                "sha256:ce56f4739dc71e3dd65cd9ffb2f527871285aca097fc1fc24f1865d6327bab18",
+                "sha256:d19d7095cf6368161e32deede8e2cebc164589b881f56dce4ad110b54417e989",
+                "sha256:dc44220e107f51c2bf2b3ba46b4c7140f53f3f3e1b7662e0cb18739acb7478d0",
+                "sha256:e0c55273575f4fc4992a6bb67e6229890aa88db8dea9c3c580e3a4c358f9833d",
+                "sha256:f8cb2a1cf67c452f5479f6d6f80744fb00fb595ba5feb80be05354a21fdd7692"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==1.0.0b9"
         },
         "wrapt": {
             "hashes": [

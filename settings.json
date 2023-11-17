@@ -1,6 +1,6 @@
 {
     "user": {
-        "alertRate" : 15,
+        "alertRate" : 2,
         "silentAlerts" : false,
         "fireEmergencyAlerts" : true,
         "angry": 20, 
@@ -14,7 +14,7 @@
     "app" : {
         "screenshotRate" : 1,
         "analysisRate": 1,
-        "storageCreationFileRate" : "2",
+        "storageCreationFileRate" : "300",
         "emotions": ["angry","disgust", "fear", "happy", "sad", "surprise", "neutral"]
     }
 }

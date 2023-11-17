@@ -14,7 +14,6 @@ class SessionStorage:
 
     _average = []
 
-
     @staticmethod
     def init_session(name : str) -> None: 
         try:
@@ -76,13 +75,13 @@ class SessionStorage:
         if (len(averageData) > 0):
             emotionsAverage = calculate_average_emotions(averageData, emotions)
         data = []
-        
+
         with open(path.join(SessionStorage._folder_path, SessionStorage._current_file), 'r') as file:
             fileContent = file.readlines()
             for line in fileContent:
                 data.append(json.loads(line)['data'])
         
-        data.append(emotionsAverage)
+        data = data + emotionsAverage
 
         with open(path.join(SessionStorage._folder_path, "emotions.json"), 'w') as file:
             file.write(json.dumps(calculate_average_emotions(data, emotions)))
@@ -91,6 +90,12 @@ class SessionStorage:
     @staticmethod
     def getEmotions():
         emotions = {emotion: 0 for emotion in AppSettings.get_app_setting('emotions')}
+        
+        current_file = SessionStorage._current_file
+        folder_path = SessionStorage._folder_path
+
+        if (current_file == None or folder_path == None): return emotions
+        
         with open(path.join(SessionStorage._folder_path, "emotions.json"), 'r') as file:
             fileContent = file.read()
             emotions = json.loads(fileContent)

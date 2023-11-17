@@ -1,8 +1,10 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
+from PyQt5.QtWidgets import  QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
+from desktop_notifier import DesktopNotifier
 from Config.session_storage import SessionStorage
+from Config.app_settings import AppSettings
+
 class EmotionWindow(QWidget):
     def __init__(self, mainWindow):
         super().__init__()
@@ -15,7 +17,6 @@ class EmotionWindow(QWidget):
         self.set_values(storage.getEmotions())
 
     def initUI(self):
-
         self.setGeometry(300, 300, 300, 200)
         self.setWindowTitle('Session Statistics')
         self.setStyleSheet("background-color: white")
@@ -24,15 +25,7 @@ class EmotionWindow(QWidget):
         self.layout.setAlignment(Qt.AlignCenter)
         self.setLayout(self.layout)
 
-        self.labels = {
-            'angry': QLabel(self),
-            'disgust': QLabel(self),
-            'fear': QLabel(self),
-            'happy': QLabel(self),
-            'sad' :  QLabel(self),
-            'surprise' :  QLabel(self),
-            'neutral' :  QLabel(self)
-        }
+        self.labels = {emotion: QLabel(self) for emotion in AppSettings.get_app_setting('emotions')}
 
         for name, label in self.labels.items():
             hbox = QHBoxLayout()
@@ -46,17 +39,22 @@ class EmotionWindow(QWidget):
             
             self.layout.addLayout(hbox)
 
-        """
-            self.milestone_button = QPushButton('Milestones', self)
-            self.milestone_button.setStyleSheet('background-color: #808080; font-size: 14px; color: white; border-radius: 10px; padding: 10px;')
-            self.milestone_button.clicked.connect(self.close)
-            self.layout.addWidget(self.milestone_button)   
-        """  
-
         self.exit_button = QPushButton('Exit', self)
         self.exit_button.setStyleSheet('background-color: #FF0000; font-size: 14px; color: white; border-radius: 10px; padding: 10px;')
         self.exit_button.clicked.connect(self.open_main_window)
         self.layout.addWidget(self.exit_button)
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.getEmotionsData)
+        self.timer.start(1000)
+
+
+        self.notifier = DesktopNotifier()
+
+        self.notifier_timer = QTimer(self)
+        self.notifier_timer.timeout.connect(self.notifications)
+        self.notifier_timer.start(2000)
+
 
     def open_main_window(self):
         self.mainWindow.show()
@@ -65,30 +63,20 @@ class EmotionWindow(QWidget):
     def set_values(self, values):
         for name, value in values.items():
             label = self.labels[name]
-            label.setText(f'{name}: {value}%')
+            label.setText(f'{name}: {round(value,2)}%')
             label.setStyleSheet("font-size: 24px; padding: 10px;")
             label.setAlignment(Qt.AlignCenter)
 
 
-def main():
-    app = QApplication(sys.argv)
+    def notifications(self):
+        storage = SessionStorage()
+        emotions = storage.getEmotions()
 
-    window = EmotionWindow()
-    window.show()
+        if not emotions: return
+        for emotion in emotions:
+            level = emotions[emotion]
+            if level >= AppSettings.get_user_setting(emotion):
+                print("ENTER")
+                n = self.notifier.send(title=f"Alerta de {emotion.lower()}", message=f"El {level}% de la clase está {emotion.lower()}.")
+                self.notifier.clear(n)
 
-    #storage = SessionStorage()
-    #print(storage.getEmotions())
-
-    window.set_values({
-        'angry':60,
-        'disgust': 23,
-        'fear': 33,
-        'happy': 65,
-        'sad' :56, 
-        'surprise':34, 
-        'neutral':10
-    })
-    sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()
