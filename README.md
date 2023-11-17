@@ -1,7 +1,9 @@
 # Videochat Facial Emotion Recognition
-Breve descripción del proyecto.
+This project leverages facial analysis techniques to discern and identify emotions exhibited during virtual calls or any content displayed on the screen. By employing the use of [DeepFace](https://github.com/serengil/deepface), the system can analyze facial expressions in real-time, providing valuable insights into the emotional states of participants. Whether used for virtual meetings, video conferences, or any application involving facial interactions, the goal is to enhance the understanding of emotional cues, ultimately contributing to more effective and empathetic communication
 
-Overleaf Paper: https://www.overleaf.com/8466269934phydpwcwpsyx
+
+## Investigation Paper
+https://www.overleaf.com/8466269934phydpwcwpsyx
 
 ## Installation
 
